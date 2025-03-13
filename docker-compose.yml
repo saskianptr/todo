@@ -3,14 +3,14 @@ version: '3.8'
 services:
   postgres:
     image: postgres:14
-    container_name: postgres_db
+    container_name: kotlin_postgres_db
     restart: always
     environment:
       POSTGRES_DB: exp_todo
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     networks:
       - todo_default
 
@@ -24,9 +24,9 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SERVER_PORT: 8001
+      SERVER_PORT: 8010
     ports:
-      - "8001:8001"
+      - "8010:8010"
     networks:
       - todo_default
 
