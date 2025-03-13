@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_DB: exp_todo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - todo_default
+
+  app:
+    build: .
+    container_name: kotlin_todo
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/exp_todo
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SERVER_PORT: 8001
+    ports:
+      - "8001:8001"
+    networks:
+      - todo_default
+
+networks:
+  todo_default:
+    driver: bridge
